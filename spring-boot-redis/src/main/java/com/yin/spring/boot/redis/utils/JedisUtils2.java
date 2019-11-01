@@ -68,7 +68,7 @@ public class JedisUtils2 {
 
     }
 
-    public static void returnResource(Jedis jedis) {
+    public  void returnResource(Jedis jedis) {
         if (jedis != null) {
             jedis.close();
         }

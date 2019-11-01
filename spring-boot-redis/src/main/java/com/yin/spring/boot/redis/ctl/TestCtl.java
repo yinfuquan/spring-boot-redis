@@ -2,6 +2,7 @@ package com.yin.spring.boot.redis.ctl;
 
 import com.yin.spring.boot.redis.utils.JedisUtils;
 import com.yin.spring.boot.redis.utils.JedisUtils2;
+import com.yin.spring.boot.redis.utils.RedisManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,12 @@ public class TestCtl {
 
     @Autowired
     private  JedisUtils2 jedisUtils;
+
+    @RequestMapping("/redis")
+    public  String redis() throws Exception {
+        Jedis jedis = RedisManager.getJedis();
+        return  jedis.set("name","yin");
+    }
 
     @RequestMapping("/test")
     public  String test() throws InterruptedException, BrokenBarrierException {
@@ -80,6 +87,9 @@ public class TestCtl {
         return "ppppp";
     }
 
+
+
+
     public  boolean accquire() throws IOException, URISyntaxException {
 
 //        JedisPool jedisPool = new JedisPool("192.168.252.162", 6379);
@@ -93,7 +103,7 @@ public class TestCtl {
                         " then  return 0 " +
                         " else "+
                         " redis.call('INCRBY', key,'1')" +
-                        " redis.call('expire', key,'2') " +
+                        " redis.call('expire', key,'50') " +
                         " end return 1 ";
 
         String key = "ip:" + System.currentTimeMillis()/1000; // 当前秒
